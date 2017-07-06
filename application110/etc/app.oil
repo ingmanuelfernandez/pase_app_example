@@ -83,7 +83,7 @@ OSEK OSEK {
       EVENT = POSIXE;
    }
    
-   TASK PeriodicTask2 {
+   TASK EndWidePulse1 {
       PRIORITY = 2;
       ACTIVATION = 1;
       STACK = 512;
@@ -100,10 +100,10 @@ OSEK OSEK {
       }
    }
    
-   ALARM ActivatePeriodicTask2 {
+   ALARM WidePulse1 {
       COUNTER = HardwareCounter;
       ACTION = ACTIVATETASK {
-         TASK = PeriodicTask2;
+         TASK = EndWidePulse1;
       }
    }
 /*

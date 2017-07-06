@@ -50,8 +50,8 @@
 
 /*==================[macros and definitions]=================================*/
 #define FIRST_START_DELAY_MS 2000
-#define FIRST_START_DELAY_MS2 2500
-#define PERIOD_MS 1000
+#define WIDEPULSE1 1
+#define PERIOD_MS 20
 #define PERIOD_PULL 10
 /*==================[internal data declaration]==============================*/
 
@@ -116,7 +116,7 @@ TASK(InitTask)
    bsp_init();
 
    SetRelAlarm(ActivatePeriodicTask, FIRST_START_DELAY_MS, PERIOD_MS);
-   SetRelAlarm(ActivatePeriodicTask2, FIRST_START_DELAY_MS2, PERIOD_MS);
+//   SetRelAlarm(ActivatePeriodicTask2, FIRST_START_DELAY_MS2, PERIOD_MS);
    //SetRelAlarm(ActivatePullingPulsEncTask, 0, PERIOD_PULL);
    TerminateTask();
 }
@@ -129,7 +129,7 @@ TASK(InitTask)
  */
 TASK(PeriodicTask)
 {
-   static char state = 0;
+/*   static char state = 0;
 
    state = 1-state;
 
@@ -137,13 +137,15 @@ TASK(PeriodicTask)
       bsp_ledAction(BOARD_LED_ID_1, BSP_LED_ACTION_ON);
    else
       bsp_ledAction(BOARD_LED_ID_1, BSP_LED_ACTION_OFF);
-
+*/
+      bsp_ledAction(BOARD_LED_ID_0_R, BSP_LED_ACTION_ON);
+      SetRelAlarm(WidePulse1,WIDEPULSE1,WIDEPULSE1);
    TerminateTask();
 }
 
-TASK(PeriodicTask2)
+TASK(EndWidePulse1)
 {
-   static char state = 0;
+/*   static char state = 0;
 
    state = 1-state;
 
@@ -151,6 +153,9 @@ TASK(PeriodicTask2)
       bsp_ledAction(BOARD_LED_ID_2, BSP_LED_ACTION_ON);
    else
       bsp_ledAction(BOARD_LED_ID_2, BSP_LED_ACTION_OFF);
+*/
+    bsp_ledAction(BOARD_LED_ID_0_R, BSP_LED_ACTION_OFF);
+    CancelAlarm(WidePulse1);
 
    TerminateTask();
 }
