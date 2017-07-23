@@ -51,7 +51,8 @@
 /*==================[macros and definitions]=================================*/
 #define FIRST_START_DELAY_MS 20
 #define FIRST_START_DELAY_MS2 2500
-#define WIDEPULSE1 1
+#define WIDEPULSE1 10
+#define WIDEPULSE2 1
 #define PERIOD_MS 20
 #define PERIOD_PULL 10
 /*==================[internal data declaration]==============================*/
@@ -130,10 +131,23 @@ TASK(InitTask)
  */
 TASK(PeriodicTask)
 {
+	static int counter = 0;
+	/* increment counter */
+	counter++;
+	/* check if the task has been executed 1000 times */
+	if (counter > 50) {
+
 
     bsp_ledAction(BOARD_LED_ID_0_R, BSP_LED_ACTION_ON);
-	    SetRelAlarm(ActivateWidePulse1, WIDEPULSE1, WIDEPULSE1);
+    SetRelAlarm(ActivateWidePulse1, WIDEPULSE2, WIDEPULSE2);
 
+    if (counter > 100) counter = 0;/* reset counter */
+	}
+	else
+	{
+	bsp_ledAction(BOARD_LED_ID_0_R, BSP_LED_ACTION_ON);
+    SetRelAlarm(ActivateWidePulse1, WIDEPULSE1, WIDEPULSE1);
+	}
    TerminateTask();
 }
 

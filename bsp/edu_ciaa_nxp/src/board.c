@@ -85,6 +85,8 @@ extern void board_init(void)
 {
    int8_t i;
 
+   mcu_init();
+
    for (i = 0 ; i < totalLeds ; i++)
    {
       mcu_gpio_setDirection(ledMap[i], MCU_GPIO_DIRECTION_OUTPUT);
@@ -94,6 +96,7 @@ extern void board_init(void)
    {
       mcu_gpio_setDirection(switchMap[i], MCU_GPIO_DIRECTION_INPUT);
    }
+
 }
 
 extern void board_ledToggle(board_ledId_enum id)
@@ -110,6 +113,36 @@ extern board_switchState_enum board_switchGet(board_switchId_enum id)
 {
    return (mcu_gpio_readPin(switchMap[id])?BOARD_TEC_NON_PRESSED:
                                            BOARD_TEC_PRESSED);
+}
+
+extern void board_pwmInit(void)
+{
+	   mcu_pwm_init();
+	   mcu_pwm_config();
+}
+
+extern void board_pwmStop(void)
+{
+	   mcu_pwm_stop();
+}
+
+extern void board_pwmStart(void)
+{
+	   mcu_pwm_start();
+}
+
+extern void board_pwmSelectLed(board_ledId_enum id)
+{
+	mcu_pwm_selectPin(ledMap[id]);
+}
+
+extern 	void board_pwmSetDutyCycle(uint8_t brightness_level)
+{
+	// Debo convertir level_brightness (0,1,2,..) a duty (100,200,300, ..)
+	uint32_t duty;
+
+	duty = (brightness_level + 1) * 100;
+	mcu_pwm_setDutyCycle(duty);
 }
 
 

@@ -1,5 +1,4 @@
 /* Copyright 2017, Gustavo Muro
- * All rights reserved.
  *
  * This file is part of CIAA Firmware.
  *
@@ -31,82 +30,34 @@
  *
  */
 
-#ifndef BOARD_H
-#define BOARD_H
-/** \brief Header para MCU
+#ifndef PASE_APP_EXAMPLE_H_
+#define PASE_APP_EXAMPLE_H_
+/** \brief PASE APP EXAMPLE
  **
- ** archivo de inicilización del microcontrolador
+ ** ejemplo de aplicación usando CIAA Firmware
  **
  **/
 
-/** \addtogroup PASE_APP_EXAMPLE
+/** \addtogroup
  ** @{ */
-/** \addtogroup MCU
+/** \addtogroup
+ ** @{ */
+/** \addtogroup
  ** @{ */
 
 /*==================[inclusions]=============================================*/
-#include "stdint.h"
-/*==================[cplusplus]==============================================*/
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*==================[macros]=================================================*/
 
 /*==================[typedef]================================================*/
-typedef enum
-{
-   BOARD_LED_ID_0_R = 0,
-   BOARD_LED_ID_0_G,
-   BOARD_LED_ID_0_B,
-   BOARD_LED_ID_1,
-   BOARD_LED_ID_2,
-   BOARD_LED_ID_3,
-   BOARD_LED_ID_QUANTITY,
-}board_ledId_enum;
-
-typedef enum
-{
-   BOARD_LED_STATE_OFF = 0,
-   BOARD_LED_STATE_ON,
-}board_ledState_enum;
-
-typedef enum
-{
-   BOARD_TEC_ID_1 = 0,
-   BOARD_TEC_ID_2,
-   BOARD_TEC_ID_3,
-   BOARD_TEC_ID_4,
-   BOARD_TEC_ID_QUANTITY,
-}board_switchId_enum;
-
-typedef enum
-{
-   BOARD_TEC_NON_PRESSED = 0,
-   BOARD_TEC_PRESSED,
-}board_switchState_enum;
 
 /*==================[external data declaration]==============================*/
 
 /*==================[external functions declaration]=========================*/
-extern void board_init(void);
-extern void board_ledSet(board_ledId_enum id, board_ledState_enum state);
-extern void board_ledToggle(board_ledId_enum id);
-extern board_ledState_enum board_ledGet(board_ledId_enum id);
-extern board_switchState_enum board_switchGet(board_switchId_enum id);
-extern void board_pwmInit(void);
-extern void board_pwmSelectLed(board_ledId_enum id);
-extern void board_pwmSetDutyCycle(uint8_t brightness_level);
-extern void board_pwmSelectLed(board_ledId_enum id);
-extern void board_pwmStop(void);
-extern void board_pwmStart(void);
 
-		/*==================[cplusplus]==============================================*/
-#ifdef __cplusplus
-}
-#endif
+/** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef BOARD_H */
+#endif /* #ifndef PASE_APP_EXAMPLE_H_ */
 
