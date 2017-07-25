@@ -1,5 +1,4 @@
 /* Copyright 2017, Gustavo Muro
- * All rights reserved.
  *
  * This file is part of CIAA Firmware.
  *
@@ -30,31 +29,27 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "bsp.h"
 
-extern void bsp_init(void)
+#ifndef PASE_APP_EXAMPLE_H_
+#define PASE_APP_EXAMPLE_H_
+
+/*==================[inclusions]=============================================*/
+
+/*==================[macros]=================================================*/
+
+/*==================[typedef]================================================*/
+
+/*==================[external data declaration]==============================*/
+#define DELAY_MS 500
+
+typedef struct
 {
-   board_init();
-   bsp_pwmInit();
-   bsp_keyboardInit();
-}
+	void (*f)(void);
+} action_key_type;
 
-extern void bsp_ledAction(board_ledId_enum id, bsp_ledAction_enum action)
-{
-   switch (action)
-   {
-      case BSP_LED_ACTION_OFF:
-         board_ledSet(id, BOARD_LED_STATE_OFF);
-         break;
 
-      case BSP_LED_ACTION_ON:
-         board_ledSet(id, BOARD_LED_STATE_ON);
-         break;
-
-      case BSP_LED_ACTION_TOGGLE:
-         board_ledToggle(id);
-         break;
-   }
-}
+/*==================[external functions declaration]=========================*/
 
 /*==================[end of file]============================================*/
+#endif /* #ifndef PASE_APP_EXAMPLE_H_ */
+

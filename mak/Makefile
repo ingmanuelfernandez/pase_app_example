@@ -35,7 +35,7 @@
 # Project Name: based on Project Path and used to define OSEK configuration file
 PROJECT_NAME         = $(lastword $(subst $(DS), , $(PROJECT_PATH)))
 
-PASE_APP_SEL 		?= 110
+PASE_APP_SEL 		?= 200
 
 # Internal modules
 $(PROJECT_NAME)_SRC_PATH  += $(PROJECT_PATH)$(DS)application$(PASE_APP_SEL)$(DS)src

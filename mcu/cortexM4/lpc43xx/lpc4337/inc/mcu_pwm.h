@@ -30,31 +30,49 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "bsp.h"
 
-extern void bsp_init(void)
-{
-   board_init();
-   bsp_pwmInit();
-   bsp_keyboardInit();
+#ifndef MCU_PWM_H
+#define MCU_PWM_H
+/** \brief Header para MCU
+ **
+ ** archivo de inicilización del microcontrolador
+ **
+ **/
+
+/** \addtogroup PASE_APP_EXAMPLE
+ ** @{ */
+/** \addtogroup MCU GPIO
+ ** @{ */
+
+/*==================[inclusions]=============================================*/
+#include "stdbool.h"
+#include "stdint.h"
+
+/*==================[cplusplus]==============================================*/
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*==================[macros]=================================================*/
+
+/*==================[typedef]================================================*/
+
+/*==================[external data declaration]==============================*/
+
+/*==================[external functions declaration]=========================*/
+extern void mcu_pwm_init(void);
+extern void mcu_pwm_selectPin(mcu_gpio_pinId_enum id);
+extern void mcu_pwm_setDutyCycle(uint32_t duty);
+extern void mcu_pwm_config(void);
+extern void mcu_pwm_stop (void);
+extern void mcu_pwm_start (void);
+
+/*==================[cplusplus]==============================================*/
+#ifdef __cplusplus
 }
-
-extern void bsp_ledAction(board_ledId_enum id, bsp_ledAction_enum action)
-{
-   switch (action)
-   {
-      case BSP_LED_ACTION_OFF:
-         board_ledSet(id, BOARD_LED_STATE_OFF);
-         break;
-
-      case BSP_LED_ACTION_ON:
-         board_ledSet(id, BOARD_LED_STATE_ON);
-         break;
-
-      case BSP_LED_ACTION_TOGGLE:
-         board_ledToggle(id);
-         break;
-   }
-}
-
+#endif
+/** @} doxygen end group definition */
+/** @} doxygen end group definition */
 /*==================[end of file]============================================*/
+#endif /* #ifndef MCU_GPIO_H */
+

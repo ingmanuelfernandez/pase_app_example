@@ -33,27 +33,11 @@
 
 #ifndef BSP_H
 #define BSP_H
-/** \brief Header para MCU
- **
- ** archivo de inicilización del microcontrolador
- **
- **/
-
-/** \addtogroup PASE_APP_EXAMPLE
- ** @{ */
-/** \addtogroup MCU
- ** @{ */
 
 /*==================[inclusions]=============================================*/
 #include "board.h"
 #include "bsp_keyboard.h"
-
-/*==================[cplusplus]==============================================*/
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/*==================[macros]=================================================*/
+#include "bsp_pwm.h"
 
 /*==================[typedef]================================================*/
 typedef enum
@@ -63,18 +47,11 @@ typedef enum
    BSP_LED_ACTION_TOGGLE,
 
 }bsp_ledAction_enum;
-/*==================[external data declaration]==============================*/
 
 /*==================[external functions declaration]=========================*/
 extern void bsp_init(void);
 extern void bsp_ledAction(board_ledId_enum id, bsp_ledAction_enum action);
 
-/*==================[cplusplus]==============================================*/
-#ifdef __cplusplus
-}
-#endif
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
 /*==================[end of file]============================================*/
 #endif /* #ifndef BSP_H */
 

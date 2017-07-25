@@ -56,6 +56,7 @@ extern "C" {
 /*==================[macros]=================================================*/
 #define KEYBOARD_TASK_TIME_MS    2
 #define KEYBOARD_MAX_TIME_PRESSED_DS 9999
+#define NONE_KEY	-1
 
 /*==================[typedef]================================================*/
 

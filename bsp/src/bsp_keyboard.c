@@ -69,7 +69,7 @@ typedef struct
 }varsKey_type;
 
 /*==================[internal data declaration]==============================*/
-static varsKey_type varsKey[BOARD_TEC_ID_TOTAL];
+static varsKey_type varsKey[BOARD_TEC_ID_QUANTITY];
 static int32_t idKeyPressed;
 static int16_t prescaler100ms;
 
@@ -86,7 +86,7 @@ extern void bsp_keyboardInit(void)
 {
    int32_t i;
 
-   for (i = 0 ; i < BOARD_TEC_ID_TOTAL ; i++)
+   for (i = 0 ; i < BOARD_TEC_ID_QUANTITY ; i++)
    {
       varsKey[i].state = KEY_STATE_WAIT_PRESS;
       varsKey[i].timerDebounce = 0;
@@ -103,7 +103,7 @@ extern int32_t bsp_keyboardGet(void)
 
    ret = idKeyPressed;
 
-   idKeyPressed = -1;
+   idKeyPressed = NONE_KEY;
 
    return ret;
 }
@@ -127,7 +127,7 @@ extern void bsp_keyboard_task(void)
    else
       prescaler100ms = convertTimeMsToInternalTime(100);
 
-   for (i = 0 ; i < BOARD_TEC_ID_TOTAL ; i++)
+   for (i = 0 ; i < BOARD_TEC_ID_QUANTITY ; i++)
    {
       switch (varsKey[i].state)
       {

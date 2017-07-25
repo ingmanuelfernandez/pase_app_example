@@ -79,7 +79,7 @@ typedef struct
 static const p_gpio_type p_gpio[] =
 {
    {{2,0},   {5,0},   FUNC4},
-   {{2,1},   {5,1},   FUNC3},
+   {{2,1},   {5,1},   FUNC4},
    {{2,2},   {5,2},   FUNC4},
    {{2,10},  {0,14},  FUNC0},
    {{2,11},  {1,11},  FUNC0},
@@ -152,9 +152,9 @@ extern void mcu_gpio_setDirection(mcu_gpio_pinId_enum id,
 
 extern void mcu_gpio_toggleOut(mcu_gpio_pinId_enum id)
 {
-   Chip_GPIO_SetPortToggle(LPC_GPIO_PORT,
+   Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,
                            p_gpio[id].gpio.port,
-                           ((uint32_t)1) << (p_gpio[id].gpio.pin));
+                           p_gpio[id].gpio.pin);
 }
 
 extern void mcu_gpio_setOut(mcu_gpio_pinId_enum id, bool state)

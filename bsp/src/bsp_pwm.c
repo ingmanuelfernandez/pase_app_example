@@ -30,31 +30,32 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "bsp.h"
+/*==================[inclusions]=============================================*/
+#include "bsp_pwm.h"
 
-extern void bsp_init(void)
+extern void bsp_pwmSelectLed(board_ledId_enum id)
 {
-   board_init();
-   bsp_pwmInit();
-   bsp_keyboardInit();
+	board_pwmSelectLed(id);
 }
 
-extern void bsp_ledAction(board_ledId_enum id, bsp_ledAction_enum action)
+extern void bsp_pwmSetDutyCycle(uint8_t brightness_level)
 {
-   switch (action)
-   {
-      case BSP_LED_ACTION_OFF:
-         board_ledSet(id, BOARD_LED_STATE_OFF);
-         break;
+	board_pwmSetDutyCycle(brightness_level);
+}
 
-      case BSP_LED_ACTION_ON:
-         board_ledSet(id, BOARD_LED_STATE_ON);
-         break;
+extern void bsp_pwmInit(void)
+{
+	board_pwmInit();
+}
 
-      case BSP_LED_ACTION_TOGGLE:
-         board_ledToggle(id);
-         break;
-   }
+extern void bsp_pwmStop(void)
+{
+	board_pwmStop();
+}
+
+extern void bsp_pwmStart(void)
+{
+	board_pwmStart();
 }
 
 /*==================[end of file]============================================*/
