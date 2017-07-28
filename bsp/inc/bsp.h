@@ -38,6 +38,7 @@
 #include "board.h"
 #include "bsp_keyboard.h"
 #include "bsp_pwm.h"
+#include "bsp_uart.h"
 
 /*==================[typedef]================================================*/
 typedef enum

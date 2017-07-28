@@ -30,32 +30,28 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "bsp.h"
 
-extern void bsp_init(void)
-{
-   board_init();
-   bsp_pwmInit();
-   bsp_uart_init();
-   bsp_keyboardInit();
-}
 
-extern void bsp_ledAction(board_ledId_enum id, bsp_ledAction_enum action)
-{
-   switch (action)
-   {
-      case BSP_LED_ACTION_OFF:
-         board_ledSet(id, BOARD_LED_STATE_OFF);
-         break;
+/*
+				#ifndef BSP_PWM_H
+				#define BSP_PWM_H
+				*/
+				/*==================[inclusions]=============================================*/
+				#include "board.h"
+				#include "stdint.h"
 
-      case BSP_LED_ACTION_ON:
-         board_ledSet(id, BOARD_LED_STATE_ON);
-         break;
 
-      case BSP_LED_ACTION_TOGGLE:
-         board_ledToggle(id);
-         break;
-   }
-}
+				/*==================[external functions declaration]=========================*/
 
-/*==================[end of file]============================================*/
+
+				extern void bsp_uart_init();
+				/*
+				extern void bsp_pwmSelectLed(board_ledId_enum id);
+				extern void bsp_pwmSetDutyCycle(uint8_t brightness_level);
+				extern void bsp_pwmStop(void);
+				extern void bsp_pwmStart(void);
+				*/
+				/*==================[end of file]============================================
+
+				#endif /* #ifndef BSP_KEYBOARD_H */
+

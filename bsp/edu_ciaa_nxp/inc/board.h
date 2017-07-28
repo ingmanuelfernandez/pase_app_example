@@ -100,6 +100,7 @@ extern void board_pwmSetDutyCycle(uint8_t brightness_level);
 extern void board_pwmSelectLed(board_ledId_enum id);
 extern void board_pwmStop(void);
 extern void board_pwmStart(void);
+extern void board_uart_init(int32_t baudrate);
 
 		/*==================[cplusplus]==============================================*/
 #ifdef __cplusplus

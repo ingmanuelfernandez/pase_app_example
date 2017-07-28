@@ -145,6 +145,10 @@ extern 	void board_pwmSetDutyCycle(uint8_t brightness_level)
 	mcu_pwm_setDutyCycle(duty);
 }
 
+extern void board_uart_init(int32_t baudrate)
+{
+		mcu_uart_init(baudrate);
+}
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

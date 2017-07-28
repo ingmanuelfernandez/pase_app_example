@@ -34,7 +34,7 @@
 #include "os.h"
 #include "pase_app_example.h"
 #include "bsp.h"
-
+#include "mcu_uart.h"
 /*==================[macros and definitions]=================================*/
 #define LOW_BRIGHTNESS 0
 #define HIGH_BRIGHTNESS 7
@@ -45,6 +45,8 @@
 #define LAST_LED 3
 #define STATE_QUANTITY 3
 #define KEY_QUANTITY 2
+
+void SendMessage(const uint8_t *, uint8_t);
 
 void F_Start_Sequence (void);
 
@@ -75,7 +77,7 @@ static board_ledId_enum ledId = BOARD_LED_ID_0_R;
 static task_ramp_enum task_ramp = TASK_RAMP_RISING;
 static int32_t led_brightness_level = LOW_BRIGHTNESS;
 static task_state_enum task_state = TASK_STATE_ON;
-
+const uint8_t mensajej[10] = "cualquier";
 
 /*
  * MAQUINA DE ESTADO DE CONTROL DE SECUENCIA DE BRILLO DE LEDS
@@ -93,6 +95,11 @@ const action_key_type action_key[BOARD_TEC_ID_QUANTITY][TASK_STATE_QUANTITY] = {
 
 /*==================[internal functions definition]==========================*/
 
+void SendMessage(const uint8_t *datoh, uint8_t longitud)
+{
+	mcu_UART_SendRB(datoh,longitud);
+
+}
 void Update_Brightness(int32_t brightness_level)
 {
     bsp_pwmSetDutyCycle(brightness_level);
@@ -177,7 +184,9 @@ void F_Continue_Sequence (void)
 
 int main(void)
 {
-   StartOS(AppMode1);
+//mensajej [] = {'a','b','c','d','e','g','h','i','z'};
+
+	StartOS(AppMode1);
    return 0;
 }
 
@@ -240,6 +249,9 @@ TASK(PeriodicLedBrightness)
     	{
     		task_ramp =TASK_RAMP_FALLING;
     	//	led_brightness_level --;
+//    		SendMessage(&mensajej,10);
+    		SendMessage(mensajej,10);
+
     	}
     	else
         	led_brightness_level ++;

@@ -126,8 +126,14 @@ OSEK OSEK {
    };
 
 	ISR TIMER1_Interrupt {
-	CATEGORY = 1; 5
+	CATEGORY = 1;
 	INTERRUPT = TIMER1;
+	PRIORITY = 0;
+	}
+	
+	ISR UART2_Handler {
+	CATEGORY = 2;
+	INTERRUPT = UART2;
 	PRIORITY = 0;
 	}
 };
