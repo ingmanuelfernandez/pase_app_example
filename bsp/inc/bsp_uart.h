@@ -53,5 +53,6 @@
 				*/
 				/*==================[end of file]============================================
 
-				#endif /* #ifndef BSP_KEYBOARD_H */
+				#endif /* #ifndef BSP_KEYBOARD_H
+				*/
 

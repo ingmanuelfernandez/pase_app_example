@@ -35,6 +35,7 @@
 #include "pase_app_example.h"
 #include "bsp.h"
 #include "mcu_uart.h"
+
 /*==================[macros and definitions]=================================*/
 #define LOW_BRIGHTNESS 0
 #define HIGH_BRIGHTNESS 7
@@ -46,7 +47,13 @@
 #define STATE_QUANTITY 3
 #define KEY_QUANTITY 2
 
-void SendMessage(const uint8_t *, uint8_t);
+#define ENCIENDO_LED 0
+#define INTENSIDAD_MAXIMA_LED 3
+#define INICIO_SECUENCIA 6
+#define SECUENCIA_PAUSADA 7
+#define SECUENCIA_REANUDADA 8
+
+void SendMessage(uint8_t);
 
 void F_Start_Sequence (void);
 
@@ -71,6 +78,17 @@ typedef enum {
 	TASK_RAMP_FALLING,
 } task_ramp_enum;
 
+typedef struct
+{
+	uint8_t * dato;
+	uint8_t longitud;
+} mensaje_type;
+
+typedef struct
+{
+	uint8_t *caracter;
+} caracter_type;
+
 /*==================[internal data definition]===============================*/
 static int32_t key_press = NONE_KEY;
 static board_ledId_enum ledId = BOARD_LED_ID_0_R;
@@ -78,7 +96,18 @@ static task_ramp_enum task_ramp = TASK_RAMP_RISING;
 static int32_t led_brightness_level = LOW_BRIGHTNESS;
 static task_state_enum task_state = TASK_STATE_ON;
 const uint8_t mensajej[10] = "cualquier";
-
+const mensaje_type mensajes[]=
+{
+		{"Encendiendo Led ROJO", 21},
+		{"Encendiendo Led VERDE", 22},
+		{"Encendiendo Led AZUL", 21},
+		{"Intensidad máxima: Led ROJO", 28},
+		{"Intensidad máxima: Led VERDE", 29},
+		{"Intensidad máxima: Led AZUL", 28},
+		{"Inicio de Secuencia", 20},
+		{"Secuencia pausada", 18},
+		{"Secuencia reanudada", 20}
+};
 /*
  * MAQUINA DE ESTADO DE CONTROL DE SECUENCIA DE BRILLO DE LEDS
  */
@@ -95,11 +124,18 @@ const action_key_type action_key[BOARD_TEC_ID_QUANTITY][TASK_STATE_QUANTITY] = {
 
 /*==================[internal functions definition]==========================*/
 
-void SendMessage(const uint8_t *datoh, uint8_t longitud)
-{
-	mcu_UART_SendRB(datoh,longitud);
 
+void SendMessage(uint8_t indice)
+{
+	uint8_t *datoh;
+	uint8_t longitud=0;
+
+	datoh = mensajes[indice].dato;
+	longitud = mensajes[indice].longitud;
+
+	mcu_UART_SendRB(datoh,longitud);
 }
+
 void Update_Brightness(int32_t brightness_level)
 {
     bsp_pwmSetDutyCycle(brightness_level);
@@ -146,7 +182,8 @@ void F_Start_Sequence (void)
 	bsp_pwmStart();
     SetRelAlarm(ActivatePeriodicLedBrightness, FIRST_START_DELAY_MS, LED_BRIGHTNESS_PERIOD_MS);
 // Habilitar interrupcion de Timer
-	return;
+	SendMessage(INICIO_SECUENCIA);
+    return;
 }
 
 void F_Stop_Sequence (void)
@@ -166,6 +203,7 @@ void F_Pause_Sequence (void)
 		task_state = TASK_STATE_PAUSE;
 		CancelAlarm(ActivatePeriodicLedBrightness);
 	// Habilitar interrupcion de Timer
+		SendMessage(SECUENCIA_PAUSADA);
 
 	return;
 }
@@ -176,6 +214,7 @@ void F_Continue_Sequence (void)
 		task_state = TASK_STATE_ON;
 	    SetRelAlarm(ActivatePeriodicLedBrightness, FIRST_START_DELAY_MS, LED_BRIGHTNESS_PERIOD_MS);
 	// Habilitar interrupcion de Timer
+		SendMessage(SECUENCIA_REANUDADA);
 	return;
 }
 
@@ -184,8 +223,6 @@ void F_Continue_Sequence (void)
 
 int main(void)
 {
-//mensajej [] = {'a','b','c','d','e','g','h','i','z'};
-
 	StartOS(AppMode1);
    return 0;
 }
@@ -249,9 +286,7 @@ TASK(PeriodicLedBrightness)
     	{
     		task_ramp =TASK_RAMP_FALLING;
     	//	led_brightness_level --;
-//    		SendMessage(&mensajej,10);
-    		SendMessage(mensajej,10);
-
+    		SendMessage(INTENSIDAD_MAXIMA_LED + ledId);
     	}
     	else
         	led_brightness_level ++;
@@ -263,6 +298,7 @@ TASK(PeriodicLedBrightness)
     		task_ramp = TASK_RAMP_RISING;
     		Current_Led_Off();
     		Switch_Led();
+    		SendMessage(ENCIENDO_LED + ledId);
     	}
     	else
         	led_brightness_level --;
